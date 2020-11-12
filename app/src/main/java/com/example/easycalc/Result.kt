@@ -4,7 +4,7 @@ import com.example.easycalc.Enums.OperationNums
 import java.lang.NumberFormatException
 import java.util.*
 
-class Result(private val string: String) : parseString {
+class Result(private val string: String) : parseString,Gresultformat {
     private var listNum1: MutableList<Double> = nums(string).toMutableList() // parsing string to list of Double
     private var listOp1: MutableList<Char> = operators(string).toMutableList() //split string  to string without nums
 
@@ -45,7 +45,7 @@ class Result(private val string: String) : parseString {
         }
     }
 
-    fun result(): String { // get result
+    fun getresult(): String { // get result
         if (listOp1.isEmpty()) return listNum1.joinToString()
         try {
             initPriorityhard('×', '÷')
@@ -61,6 +61,6 @@ class Result(private val string: String) : parseString {
         initPriorityhard('+', '-')
         initeasy('+')
         initeasy('-')
-        return resultformat(listNum1[0])
+        return getResultFormat(listNum1[0])
     }
 }

@@ -10,7 +10,7 @@ import android.view.View
 import com.example.easycalc.Enums.DeleteOnClickOp
 import com.example.easycalc.keyboard.Allkeyboardbuttons
 import kotlinx.android.synthetic.main.activity_main.*
-
+import java.lang.NumberFormatException
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,18 +50,16 @@ class MainActivity : AppCompatActivity() {
         buttonDiv.setOnClickListener(::keyboardoperationsOnClick)
         buttonDec.setOnClickListener(::keyboardoperationsOnClick)
         buttonTimes.setOnClickListener(::keyboardoperationsOnClick)
-        buttonEquals.setOnClickListener(::equaliss)
+        buttonEquals.setOnClickListener(::catcherror)
 
     }
     private fun equaliss(v:View) {
         val text =textView.text.toString()
         if (listOf('+', '×', '÷', '-').contains(textView.text[textView.text.lastIndex])){
-            val result = Result(text.substring(0,text.length-1))
-            textView.text =result.result()
+            textView.text =Result(text.substring(0,text.length-1)).getresult()
         }
         else {
-            val result = Result(textView.text.toString())
-            textView.text =result.result()
+            textView.text =Result(textView.text.toString()).getresult()
         }
     }
 
@@ -93,6 +91,16 @@ class MainActivity : AppCompatActivity() {
     private fun Deletesome(v:View){
         textView.text = DeleteOnClickOp.values().find{it.name == v.tag}!!.delresult(textView.text.toString())
     }
+    fun catcherror(v:View) {
+        try{
+            equaliss(buttonEquals)
+            equaliss(buttonEquals)
+        }
+        catch (e:NumberFormatException) {
+            textView.text = "Ошибка"
+        }
+    }
+    
 
 
 }

@@ -15,7 +15,8 @@ interface parseString {
                 }
                 firstnumber += str[i]
             }
-            return listOf(firstnumber.toDouble()) + str.substring(startsubstring + 1, str.length)
+            return listOf(firstnumber.replace(',','.').toDouble()) + str.substring(startsubstring + 1, str.length)
+                .replace(',','.')
                 .split("+", "×", "÷", "-").map { it.toDouble() }
         }
         return str.split("+", "×", "÷", "-").map { it.toDouble() }
@@ -25,7 +26,7 @@ interface parseString {
         if (str.first() == '-') {
             return str.substring(1, str.length).filter { it !in ('0'..'9') }
         }
-        return str.filter { it !in ('0'..'9') }
+        return str.filter { it !in ('0'..'9') &&  it != '.' }
     }
 
     fun charOptoStr(char1: Char): String {
@@ -40,22 +41,6 @@ interface parseString {
 
     fun getEnumByItName(enumname:String): OperationNums? {
         return OperationNums.values().find { it.name == enumname }
-    }
-
-    fun resultformat(double: Double): String {
-        val x =double.toString().split(".")
-        println(x)
-        println(double.toInt().toString().length)
-        if (isWhole(double)){
-            return double.toInt().toString()
-        }
-        else {
-            return println(double).toString()
-        }
-    }
-
-    fun isWhole(value: Double):Boolean {
-        return value - value.toInt() == 0.0
     }
 
 }
